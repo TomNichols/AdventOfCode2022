@@ -27,7 +27,7 @@ def source_pile(line):
 def dest_pile(line):
     return int(line.split(" ")[5])
 
-def score(state):
+def code(state):
     code = ''
     for key in state:
         code += state[key][-1]
@@ -44,7 +44,7 @@ def rearrangement(lines):
         move_list = source_list[-n:][::-1]
         state[dest_id].extend(move_list)
         state[source_id] = new_source_list
-    return score(state)
+    return code(state)
 
 def rearrangement_2(lines):
     state = initial_state()
@@ -57,7 +57,7 @@ def rearrangement_2(lines):
         move_list = source_list[-n:]
         state[dest_id].extend(move_list)
         state[source_id] = new_source_list
-    return score(state)
+    return code(state)
 
 print(rearrangement(read_input(filename)))
 print(rearrangement_2(read_input(filename)))
