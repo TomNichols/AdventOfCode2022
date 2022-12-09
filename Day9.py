@@ -19,25 +19,20 @@ def move_head(pos, dir):
 def string_vector(head_pos, tail_pos):
     return [a - b for a, b in zip(head_pos, tail_pos)]
 
+def sign(x):
+    return x/abs(x) if x != 0 else x
+
 def move_tail(head_pos, tail_pos):
 
     vector = string_vector(head_pos, tail_pos)
 
     # If head and tail are touching
-    if (vector[0]**2 + vector[1]**2)**0.5 <= 2**0.5:
+    if vector[0]**2 + vector[1]**2 <= 2:
         return tail_pos
 
-    # If head is two steps from tail on y axis
-    elif vector[0] == 0:
-        return [tail_pos[0], int(tail_pos[1] + 0.5*vector[1])]
-
-    # If head is two steps from tail on x axis
-    elif vector[1] == 0:
-        return [int(tail_pos[0]  + 0.5*vector[0]), tail_pos[1]]
-
-    # If head are apart and don't share an axis
+    # If head and tails are apart
     else:
-        return [int(tail_pos[0] + vector[0]/abs(vector[0])), int(tail_pos[1] + vector[1]/abs(vector[1]))]
+        return [int(tail_pos[0] + sign(vector[0])), int(tail_pos[1] + sign(vector[1]))]
 
 def move_string(lines):
     head_pos, tail_pos = [0,0] , [0,0]
@@ -65,7 +60,6 @@ def move_rope(lines):
                 else:
                     pos[j] = move_tail(pos[j-1], pos[j])
             tail_pos_list += [pos[9]]
-    print(tail_pos_list)
     return len(set([tuple(i) for i in tail_pos_list]))
 
 print(move_string(read_input(filename)))
